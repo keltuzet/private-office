@@ -1,0 +1,8 @@
+<div class="contact-modal">
+  <h2 class="contact-modal__title">{{ id ? 'Создание' : 'Редактирование' }}</h2>
+  <form [formGroup]="contactForm" (submit)="handleSubmit()">
+    <formly-form [form]="contactForm" [fields]="contactFields"></formly-form>
+    <button color="primary" mat-raised-button type="submit">Сохранить</button>
+    <ngx-spinner name="contact-form"></ngx-spinner>
+  </form>
+</div>

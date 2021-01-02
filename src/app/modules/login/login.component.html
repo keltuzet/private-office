@@ -1,0 +1,16 @@
+<div class="container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <mat-card-title> Авторизация </mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()" autocomplete="off" autofocus>
+        <formly-form [form]="loginForm" [fields]="loginFieldsConfig"></formly-form>
+        <button class="auth-card__btn" mat-raised-button color="primary" type="submit">Войти</button>
+      </form>
+    </mat-card-content>
+
+    <ngx-spinner name="login-form"></ngx-spinner>
+  </mat-card>
+</div>

@@ -1,0 +1,19 @@
+.container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-card {
+  max-width: 32rem;
+  padding: 2rem;
+
+  .mat-card-content {
+    font-size: 16px;
+  }
+
+  .auth-card__btn {
+    margin-top: 0.75rem;
+  }
+}

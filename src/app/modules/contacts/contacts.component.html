@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="table-wrap">
+    <div class="table-header-content">
+      <form class="row-form" [formGroup]="filterForm" (submit)="handleSearch()" autocomplete="off">
+        <button mat-icon-button type="submit" color="primary"><mat-icon>search</mat-icon></button>
+        <formly-form [form]="filterForm" [fields]="filterFields"></formly-form>
+      </form>
+    </div>
+
+    <mat-table #matTable [dataSource]="contacts$ | async">
+      <mat-header-row *matHeaderRowDef="tableCols"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: tableCols"></mat-row>
+
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef> Эл. адрес </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="phone-number">
+        <mat-header-cell *matHeaderCellDef> Телефонный номер </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.phoneNumber }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="address">
+        <mat-header-cell *matHeaderCellDef> Адрес </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.address }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="social-networks">
+        <mat-header-cell *matHeaderCellDef> Страна </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{ row.country }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef class="action-col">
+          <button (click)="handleOpenContactModal()" matTooltip="Добавить" mat-icon-button color="primary"><mat-icon>add_box</mat-icon></button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row" class="action-col">
+          <button (click)="handleOpenContactModal(row.id)" matTooltip="Редактировать" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+          <button (click)="handleRemoveContact(row.id)" matTooltip="Удалить" mat-icon-button color="warn"><mat-icon>delete</mat-icon></button>
+        </mat-cell>
+      </ng-container>
+    </mat-table>
+
+    <div class="table-no-records" *ngIf="!matTable._data.length">Нет записей</div>
+    <ngx-spinner name="contacts-table"></ngx-spinner>
+  </div>
+</div>
