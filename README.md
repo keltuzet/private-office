@@ -4,9 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Development server
 
-Run `npm start` or `json-server db.json -m ./node_modules/json-server-auth -r routes.json` and `ng s -o` in different terminals
-Port for json-server-auth - http://localhost:3000
-Port for app - http://localhost:4200
+Run `npm start` or `json-server db.json -m ./node_modules/json-server-auth -r routes.json` and `ng s -o` in different terminals. Port for json-server-auth - http://localhost:3000. Port for app - http://localhost:4200
 
 ## Build
 
