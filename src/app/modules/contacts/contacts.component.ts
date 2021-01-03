@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FormGroup } from '@angular/forms';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { NotificationService } from '@core/services/notification.service';
 import { ContactModalComponent } from './components';
@@ -16,9 +16,9 @@ import { ContactsService } from './contacts.service';
   styleUrls: ['./contacts.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ContactsComponent implements OnInit {
+export class ContactsComponent implements OnInit, OnDestroy {
   public tableCols: string[] = ['email', 'phone-number', 'address', 'social-networks', 'actions'];
-  public contacts$: Observable<ContactModel[]>;
+  public contacts: ContactModel[];
   public filterForm = new FormGroup({});
   public filterFields = CONCTACT_TABLE_FILTER_FIELDS_CONFIG;
 
@@ -28,7 +28,15 @@ export class ContactsComponent implements OnInit {
   constructor(private apiServise: ContactsService, private dialog: MatDialog, private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-    this.contacts$ = this.reload$.pipe(switchMap(() => this.apiServise.getContacts(this.filterForm.value as ContactFilterModel)));
+    this.$subscription.add(
+      this.reload$
+        .pipe(switchMap(() => this.apiServise.getContacts(this.filterForm.value as ContactFilterModel)))
+        .subscribe((contacts) => (this.contacts = contacts)),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.$subscription.unsubscribe();
   }
 
   handleOpenContactModal(id?: number): void {

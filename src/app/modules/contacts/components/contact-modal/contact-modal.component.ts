@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
@@ -12,12 +12,13 @@ import { CONCTACT_FIELDS_CONFIG } from '@modules/contacts/const';
 @Component({
   templateUrl: './contact-modal.component.html',
   styleUrls: ['./contact-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactModalComponent implements OnInit, OnDestroy {
-  contactFields = cloneDeep(CONCTACT_FIELDS_CONFIG);
-  contactForm = new FormGroup({});
-  form = new FormGroup({});
-  $subscription: Subscription = new Subscription();
+  public contactFields = cloneDeep(CONCTACT_FIELDS_CONFIG);
+  public contactForm = new FormGroup({});
+
+  private $subscription: Subscription = new Subscription();
 
   constructor(
     private apiService: ContactsService,

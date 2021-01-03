@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -12,13 +12,11 @@ import { LOGIN_FIELDS_CONFIG } from './login.fields-config';
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
-  loginForm = new FormGroup({});
-  loginFieldsConfig = LOGIN_FIELDS_CONFIG;
+export class LoginComponent {
+  public loginForm = new FormGroup({});
+  public loginFieldsConfig = LOGIN_FIELDS_CONFIG;
 
-  constructor(private authenticationService: AuthenticationService, private router: Router, private authService: AuthenticationService) {}
-
-  ngOnInit(): void {}
+  constructor(private authenticationService: AuthenticationService, private router: Router) {}
 
   handleSubmit(): void {
     this.loginForm.markAllAsTouched();
@@ -27,7 +25,7 @@ export class LoginComponent implements OnInit {
     }
 
     this.authenticationService.login(this.loginForm.getRawValue() as Login).subscribe(() => {
-      this.router.navigateByUrl(this.authService.getInterruptedUrl());
+      this.router.navigateByUrl(this.authenticationService.getInterruptedUrl());
     });
   }
 }
